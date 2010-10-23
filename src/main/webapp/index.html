@@ -1,3 +1,13 @@
 <lift:surround with="default" at="content">
-MSG <lift:SectionMostViewed.hello />
+    <lift:SectionMostViewed.name>
+
+        <h1><section:name/></h1>
+
+        <lift:SectionMostViewed.mostViewed>
+            <content:trail-image/>
+            <h2><a content:href=""><content:name/></a></h2>
+            <p><content:trail-text/></p>
+        </lift:SectionMostViewed.mostViewed>
+
+    </lift:SectionMostViewed.name>
 </lift:surround>
