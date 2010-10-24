@@ -17,16 +17,13 @@ class Boot {
 
 
     LiftRules.statefulRewrite.prepend(NamedPF("SectionMostViewedRewrite") {
-      case RewriteRequest(
-          ParsePath("mostviewed" :: section :: Nil, _, _,_), _, _) =>
-        RewriteResponse(
-          "index" :: Nil, Map("section" -> section)
-      )
+      case RewriteRequest(ParsePath("mostviewed" :: section :: Nil, _, _,_), _, _) =>
+        RewriteResponse("mostviewed" :: Nil, Map("section" -> section))
     })
 
 
 
-    LiftRules.setSiteMap(SiteMap(Menu("Home") / "index"))
+    LiftRules.setSiteMap(SiteMap(Menu("Home") / "mostviewed"))
   }
   
 }

@@ -1,0 +1,32 @@
+<lift:surround with="default" at="content">
+    <lift:MostViewed>
+
+        <h1>Most viewed: <section:name/></h1>
+
+        <ol style="list-style-type:none;">
+            <section:content>
+
+                <content:list>
+                    <li style="clear:left; padding-bottom:10px; border-bottom-style:dotted;">
+
+                        <content:trail-image>
+                            <image:optional>
+                                <img style="float:left; padding-right:5px;" i:thumbnail=""/>
+                            </image:optional>
+                        </content:trail-image>
+
+                        <a content:web-url=""><h2><content:name/></h2></a>
+
+                        <content:trail-text>
+                            <text:optional>
+                                <t:trail-text/>
+                            </text:optional>
+                        </content:trail-text>
+                    </li>
+                </content:list>
+
+            </section:content>
+        </ol>
+    </lift:MostViewed>
+
+</lift:surround>
