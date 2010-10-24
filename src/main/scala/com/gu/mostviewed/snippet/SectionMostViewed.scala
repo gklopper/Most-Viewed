@@ -7,20 +7,23 @@ import com.gu.openplatform.contentapi.model.Content
 
 class SectionMostViewed extends BindHelpers{
 
-  def name(xml: NodeSeq) = {
-    bind("section", xml, "name" -> SectionApi.fetch.section.get.webTitle)
-  }
+  private def renderContent(xml: NodeSeq, c: Content) = bind("c", chooseTemplate("content", "list", xml),
+        "name" -> Text(c.webTitle),
+        AttrBindParam("href", c.webUrl, "href"),
+        "trail-image" -> renderOptionalTrailImage(xml, c.fields.get.get("thumbnail")),
+        "trail-text" -> renderOptionalTrailText(xml, c.fields.get.get("trailText")))
 
-  def mostViewed(xml: NodeSeq) = SectionApi.fetch.mostViewed.flatMap( c => bindContent(xml, c))
+  private def renderOptionalTrailImage(xml: NodeSeq, imageUrl: Option[String]) =
+    imageUrl.toList.flatMap(url => bind("i", chooseTemplate("image", "optional", xml), AttrBindParam("src", url, "src")))
 
-  def bindContent(xml: NodeSeq, c: Content) = bind("content", xml, "name" --> c.webTitle,
-    "trail-text" --> Unparsed(c.fields.get.get("trailText").get),
-    AttrBindParam("href", c.webUrl, "href"),
-    "trail-image" --> toTrailImage(c))
+  private def renderOptionalTrailText(xml: NodeSeq, trailText: Option[String]) =
+      trailText.toList.flatMap(text => bind("t", chooseTemplate("text", "optional", xml), "trail-text" -> Unparsed(text)))
 
-  def toTrailImage(c: Content) = c.fields.get.get("thumbnail") match {
-    case Some(url) => <img src={url}/>
-    case None => Text("")
+
+  def render(xml: NodeSeq) = {
+    bind("section", xml, 
+      "name" -> SectionApi.fetch.section.get.webTitle,
+      "content" -> SectionApi.fetch.mostViewed.flatMap(c => renderContent(xml, c)))
   }
 
 }

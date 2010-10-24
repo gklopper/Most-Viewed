@@ -11,5 +11,5 @@ class Project(info: ProjectInfo) extends DefaultWebProject(info) {
   val guardianGithub = "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases"
   val contentApiClient = "com.gu.openplatform" %% "content-api-client" % "1.5-SNAPSHOT" withSources()
 
-  val jettyServer = "org.mortbay.jetty" % "jetty" % "6.1.22" % "test->default"
+  val jettyServer = "org.mortbay.jetty" % "jetty" % "6.1.25" % "test->default"
 }

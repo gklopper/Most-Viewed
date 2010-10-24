@@ -1,13 +1,37 @@
 <lift:surround with="default" at="content">
-    <lift:SectionMostViewed.name>
+    <lift:SectionMostViewed>
 
-        <h1><section:name/></h1>
+        <h1>Most viewed:
+            <section:name/>
+        </h1>
+        <ul style="list-style-type:none;">
+            <section:content>
 
-        <lift:SectionMostViewed.mostViewed>
-            <content:trail-image/>
-            <h2><a content:href=""><content:name/></a></h2>
-            <p><content:trail-text/></p>
-        </lift:SectionMostViewed.mostViewed>
+                <content:list>
+                    <li style="clear:left; padding-bottom:10px; border-bottom-style:dotted;">
 
-    </lift:SectionMostViewed.name>
+                        <c:trail-image>
+                            <image:optional>
+                                <img style="float:left; padding-right:5px;" i:src=""/>
+                            </image:optional>
+                        </c:trail-image>
+
+                        <a c:href="">
+                            <h2>
+                                <c:name/>
+                            </h2>
+                        </a>
+
+                        <c:trail-text>
+                            <text:optional>
+                                <t:trail-text/>
+                            </text:optional>
+                        </c:trail-text>
+                    </li>
+                </content:list>
+
+            </section:content>
+        </ul>
+    </lift:SectionMostViewed>
+
 </lift:surround>
