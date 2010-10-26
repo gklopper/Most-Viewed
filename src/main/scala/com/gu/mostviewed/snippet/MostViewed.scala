@@ -10,7 +10,11 @@ import com.gu.openplatform.contentapi.model.{Section, ItemResponse, Content}
 class MostViewed extends BindHelpers {
 
   def render(xml: NodeSeq) = bind("section", xml,
-      "name" -> Repository.fetch.section.get.webTitle,
+      "name" -> (Repository.fetch.section match {
+        case Some(s) => s.webTitle 
+        case None => "guardian.co.uk"
+      }),
+
       "content" -> Repository.fetch.mostViewed.flatMap(c => renderContent(xml, c)))
 
   private def renderContent(xml: NodeSeq, c: Content) = bind("content", chooseTemplate("section", "content", xml),
@@ -31,7 +35,7 @@ object Repository {
 
     //stubApi
 
-    Api.item.showMostViewed.showFields("trailText,thumbnail").itemId(S.param("section").getOrElse("news")).response
+    Api.item.showMostViewed().showFields("trailText,thumbnail").itemId(S.param("section").getOrElse("/")).response
   })
 
   def fetch() = sectionApi.get
