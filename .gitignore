@@ -5,3 +5,4 @@ project/*.iml
 *.ipr
 *.iws
 lib_managed
+.idea
