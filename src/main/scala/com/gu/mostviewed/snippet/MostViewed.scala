@@ -9,24 +9,23 @@ import com.gu.openplatform.contentapi.model.{Section, ItemResponse, Content}
 
 class MostViewed extends BindHelpers {
 
-  def render(xml: NodeSeq) = bind("section", xml,
-      "name" -> (Repository.fetch.section match {
-        case Some(s) => s.webTitle 
-        case None => "guardian.co.uk"
-      }),
+  def content(xml: NodeSeq) = Repository.fetch.mostViewed.flatMap(c => renderContent(xml, c))
 
-      "content" -> Repository.fetch.mostViewed.flatMap(c => renderContent(xml, c)))
+  def sectionName(xml: NodeSeq) = Repository.fetch.section match {
+    case Some(s) => Text("Most viewed: " + s.webTitle)
+    case None => Text("Most viewed")
+  }
 
-  private def renderContent(xml: NodeSeq, c: Content) = bind("content", chooseTemplate("section", "content", xml),
-    "name" -> Unparsed(c.webTitle).toString,
+  private def renderContent(xml: NodeSeq, c: Content) = bind("content", xml,
+    "name" -> c.webTitle,
     AttrBindParam("web-url", c.webUrl, "href"),
     "trail-image" -> renderOptionalTrailImage(xml, c.fields.get.get("thumbnail")),
     "trail-text" -> Unparsed(c.fields.get.get("trailText").getOrElse("")).toSeq)
 
   private def renderOptionalTrailImage(xml: NodeSeq, imageUrl: Option[String]) = imageUrl match {
-      case Some(url) => bind("i", chooseTemplate("content", "trail-image", xml), AttrBindParam("thumbnail", url, "src"))
-      case None => Text("")
-    }
+    case Some(url) => bind("i", chooseTemplate("content", "trail-image", xml), AttrBindParam("thumbnail", url, "src"))
+    case None => Text("")
+  }
 }
 
 object Repository {

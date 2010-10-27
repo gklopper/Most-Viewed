@@ -1,15 +1,14 @@
 <html  xmlns="http://www.w3.org/1999/xhtml" xmlns:lift='http://liftweb.net'>
-<head>
+  <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <title>Most viewed</title>
-</head>
-<body>
-<lift:MostViewed>
+    <title><lift:MostViewed.sectionName/> | guardian.co.uk</title>
+  </head>
+  <body>
 
-    <h1>Most viewed: <section:name/></h1>
+    <h1><lift:MostViewed.sectionName/></h1>
 
-    <ol style="list-style-type:none;">
-      <section:content>
+      <ol style="list-style-type:none;">
+        <lift:MostViewed.content>
           <li style="clear:left; padding-bottom:10px; border-bottom-style:dotted;">
 
             <content:trail-image>
@@ -17,11 +16,11 @@
             </content:trail-image>
 
             <a content:web-url=""><h2><content:name/></h2></a>
-
+  
             <content:trail-text/>
           </li>
-      </section:content>
-    </ol>
-  </lift:MostViewed>
-</body>
+        </lift:MostViewed.content>
+      </ol>
+
+  </body>
 </html>
